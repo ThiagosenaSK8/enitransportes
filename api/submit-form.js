@@ -62,29 +62,21 @@ export default async function handler(req, res) {
         });
 
         console.log('Email enviado:', mailResponse);
-        res.status(200).json({ message: 'Cotação enviada com sucesso!' });
+        return res.status(200).json({ 
+            success: true,
+            message: 'Cotação enviada com sucesso!'
+        });
     } catch (error) {
-        console.error('Detalhes completos do erro:', {
+        console.error('Erro detalhado:', JSON.stringify({
             message: error.message,
             code: error.code,
-            response: error.response,
-            stack: error.stack,
-            command: error.command,
-            sourceIP: error.sourceIP,
-            targetIP: error.targetIP
-        });
+            response: error.response
+        }));
 
-        let errorMessage = 'Erro ao enviar a cotação. Por favor, tente novamente.';
-        
-        if (error.code === 'ECONNREFUSED') {
-            errorMessage = 'Erro de conexão com servidor de email.';
-        } else if (error.code === 'EAUTH') {
-            errorMessage = 'Erro de autenticação com servidor de email.';
-        }
-
-        res.status(500).json({ 
-            message: errorMessage,
-            details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        return res.status(500).json({ 
+            success: false,
+            message: 'Erro ao enviar a cotação. Por favor, tente novamente.',
+            error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
         });
     }
 }

@@ -33,19 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
     quoteForm?.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Show loading state
         const submitBtn = quoteForm.querySelector('.btn-submit');
         const buttonText = submitBtn.querySelector('.button-text');
         const spinner = submitBtn.querySelector('.spinner');
         
-        buttonText.style.display = 'none';
-        spinner.style.display = 'inline-block';
-        submitBtn.disabled = true;
-
-        const formData = new FormData(quoteForm);
-        const data = Object.fromEntries(formData);
-
         try {
+            buttonText.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(quoteForm);
+            const data = Object.fromEntries(formData);
+
             const response = await fetch('/api/submit-form', {
                 method: 'POST',
                 headers: {
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(result.message);
             quoteForm.reset();
         } catch (error) {
-            console.error('Detalhes do erro:', error);
+            console.error('Erro:', error);
             alert(error.message || 'Erro ao enviar o formulário. Por favor, tente novamente.');
         } finally {
             buttonText.style.display = 'inline-block';
