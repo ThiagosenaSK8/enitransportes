@@ -288,7 +288,15 @@
                         <textarea id="comentarios" name="comentarios" rows="4"></textarea>
                     </div>
                     
-                    <button type="submit" class="btn-primary btn-submit">Solicite um Orçamento</button>
+                    <div class="form-group">
+                        <input type="checkbox" id="gdpr-consent" name="gdpr-consent" required>
+                        <label for="gdpr-consent">Concordo com o processamento dos meus dados para fins de cotação.</label>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-submit">
+                        <span class="button-text">Solicite um Orçamento</span>
+                        <span class="spinner" style="display: none;">Enviando...</span>
+                    </button>
                 </form>
             </div>
         </section>

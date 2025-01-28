@@ -566,6 +566,29 @@ body {
     transform: translateY(-1px);
 }
 
+.btn-submit .spinner {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.gdpr-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.gdpr-consent input[type="checkbox"] {
+    margin-top: 0.3rem;
+}
+
 /* Contact Section */
 .contact-info {
     display: grid;

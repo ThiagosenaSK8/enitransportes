@@ -29,15 +29,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Form handling
-    const contactForm = document.getElementById('contact-form');
-    contactForm?.addEventListener('submit', async (e) => {
+    const quoteForm = document.getElementById('quote-form');
+    quoteForm?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const formData = new FormData(contactForm);
+        
+        // Show loading state
+        const submitBtn = quoteForm.querySelector('.btn-submit');
+        const buttonText = submitBtn.querySelector('.button-text');
+        const spinner = submitBtn.querySelector('.spinner');
+        
+        buttonText.style.display = 'none';
+        spinner.style.display = 'inline-block';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(quoteForm);
+        const data = Object.fromEntries(formData);
+
         try {
-            // Add your form submission logic here
-            console.log('Form submitted:', Object.fromEntries(formData));
+            const response = await fetch('/api/submit-form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message);
+                quoteForm.reset();
+            } else {
+                throw new Error(result.message);
+            }
         } catch (error) {
-            console.error('Error submitting form:', error);
+            console.error('Erro:', error);
+            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
+        } finally {
+            // Reset loading state
+            buttonText.style.display = 'inline-block';
+            spinner.style.display = 'none';
+            submitBtn.disabled = false;
         }
     });
 
