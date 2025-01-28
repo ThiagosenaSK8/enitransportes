@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             quoteForm.reset();
         } catch (error) {
             console.error('Erro:', error);
-            alert(error.message || 'Erro ao enviar o formulário. Por favor, tente novamente.');
+            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
         } finally {
             buttonText.style.display = 'inline-block';
             spinner.style.display = 'none';
