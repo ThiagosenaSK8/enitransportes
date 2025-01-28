@@ -56,17 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const result = await response.json();
 
-            if (response.ok) {
-                alert(result.message);
-                quoteForm.reset();
-            } else {
-                throw new Error(result.message);
+            if (!response.ok) {
+                throw new Error(result.message || 'Erro ao enviar formulário');
             }
+
+            alert(result.message);
+            quoteForm.reset();
         } catch (error) {
-            console.error('Erro:', error);
-            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
+            console.error('Detalhes do erro:', error);
+            alert(error.message || 'Erro ao enviar o formulário. Por favor, tente novamente.');
         } finally {
-            // Reset loading state
             buttonText.style.display = 'inline-block';
             spinner.style.display = 'none';
             submitBtn.disabled = false;

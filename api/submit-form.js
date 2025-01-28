@@ -1,4 +1,3 @@
-
 const nodemailer = require('nodemailer');
 
 export default async function handler(req, res) {
@@ -29,16 +28,25 @@ export default async function handler(req, res) {
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
-        secure: false,
+        secure: false, // TLS
         auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
         },
+        tls: {
+            ciphers: 'SSLv3',
+            rejectUnauthorized: false
+        },
+        debug: true // Ativa logs detalhados
     });
 
     try {
-        await transporter.sendMail({
-            from: `"${process.env.FROM_NAME}" <${process.env.FROM_EMAIL}>`,
+        // Teste de conexão com o servidor SMTP
+        await transporter.verify();
+        console.log('Conexão SMTP verificada com sucesso');
+        
+        const mailResponse = await transporter.sendMail({
+            from: process.env.SMTP_USER, // Para Office 365, usar o mesmo email da autenticação
             to: process.env.TO_EMAIL,
             subject: "Nova Cotação de Serviço de Logística",
             html: `
@@ -53,11 +61,30 @@ export default async function handler(req, res) {
             `,
         });
 
+        console.log('Email enviado:', mailResponse);
         res.status(200).json({ message: 'Cotação enviada com sucesso!' });
     } catch (error) {
-        console.error('Erro ao enviar email:', error);
+        console.error('Detalhes completos do erro:', {
+            message: error.message,
+            code: error.code,
+            response: error.response,
+            stack: error.stack,
+            command: error.command,
+            sourceIP: error.sourceIP,
+            targetIP: error.targetIP
+        });
+
+        let errorMessage = 'Erro ao enviar a cotação. Por favor, tente novamente.';
+        
+        if (error.code === 'ECONNREFUSED') {
+            errorMessage = 'Erro de conexão com servidor de email.';
+        } else if (error.code === 'EAUTH') {
+            errorMessage = 'Erro de autenticação com servidor de email.';
+        }
+
         res.status(500).json({ 
-            message: 'Erro ao enviar a cotação. Por favor, tente novamente.' 
+            message: errorMessage,
+            details: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }
 }
