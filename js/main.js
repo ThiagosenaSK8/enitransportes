@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(quoteForm);
             const data = Object.fromEntries(formData);
 
+            // Log para debug
+            console.log('Dados do formulário:', data);
+
             const response = await fetch('/api/submit-form', {
                 method: 'POST',
                 headers: {
@@ -54,7 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(data)
             });
 
+            console.log('Status da resposta:', response.status);
             const result = await response.json();
+            console.log('Resposta completa:', result);
 
             if (!response.ok) {
                 throw new Error(result.message || 'Erro ao enviar formulário');
@@ -63,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(result.message);
             quoteForm.reset();
         } catch (error) {
-            console.error('Erro:', error);
-            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
+            console.error('Erro completo:', error);
+            alert(error.message || 'Erro ao enviar o formulário. Por favor, tente novamente.');
         } finally {
             buttonText.style.display = 'inline-block';
             spinner.style.display = 'none';

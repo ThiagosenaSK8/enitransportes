@@ -1,8 +1,17 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
-    // Certifique-se de que res.json() só é chamado uma vez
     try {
+        // Log para debug
+        console.log('Requisição recebida:', req.method);
+        console.log('Corpo da requisição:', req.body);
+        console.log('Variáveis de ambiente:', {
+            host: process.env.SMTP_HOST,
+            port: process.env.SMTP_PORT,
+            user: process.env.SMTP_USER,
+            toEmail: process.env.TO_EMAIL
+        });
+
         if (req.method !== 'POST') {
             return res.status(405).json({
                 success: false,
@@ -30,50 +39,66 @@ export default async function handler(req, res) {
         }
 
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT),
-            secure: false, // TLS
+            host: 'smtp.office365.com',
+            port: 587,
+            secure: false,
             auth: {
                 user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
+                pass: process.env.SMTP_PASS
             },
             tls: {
+                ciphers: 'SSLv3',
                 rejectUnauthorized: false
             }
         });
 
-        // Verifica conexão primeiro
-        await transporter.verify();
-
-        // Envia o email
-        const mailResponse = await transporter.sendMail({
-            from: process.env.SMTP_USER, // Para Office 365, usar o mesmo email da autenticação
+        const mailData = {
+            from: process.env.SMTP_USER,
             to: process.env.TO_EMAIL,
             subject: "Nova Cotação de Serviço de Logística",
             html: `
                 <h2>Nova Cotação de Serviço de Logística</h2>
-                <p><strong>Nome:</strong> ${nome}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Telefone:</strong> ${telefone}</p>
-                <p><strong>Dimensões da Carga:</strong> ${comprimento}m x ${largura}m x ${altura}m</p>
-                <p><strong>Peso:</strong> ${peso}kg</p>
-                <p><strong>Serviço Principal:</strong> ${servico}</p>
-                <p><strong>Comentários:</strong> ${comentarios}</p>
+                <p><strong>Nome:</strong> ${req.body.nome}</p>
+                <p><strong>Email:</strong> ${req.body.email}</p>
+                <p><strong>Telefone:</strong> ${req.body.telefone}</p>
+                <p><strong>Dimensões da Carga:</strong> ${req.body.comprimento}m x ${req.body.largura}m x ${req.body.altura}m</p>
+                <p><strong>Peso:</strong> ${req.body.peso}kg</p>
+                <p><strong>Serviço Principal:</strong> ${req.body.servico}</p>
+                <p><strong>Comentários:</strong> ${req.body.comentarios}</p>
             `
-        });
+        };
 
-        return res.status(200).json({
-            success: true,
-            message: 'Cotação enviada com sucesso!'
-        });
+        // Log para debug
+        console.log('Configuração do email:', mailData);
+
+        try {
+            await transporter.verify();
+            console.log('Verificação do transportador bem-sucedida');
+            
+            const info = await transporter.sendMail(mailData);
+            console.log('Email enviado:', info);
+
+            return res.status(200).json({
+                success: true,
+                message: 'Cotação enviada com sucesso!'
+            });
+        } catch (emailError) {
+            console.error('Erro ao enviar email:', emailError);
+            throw emailError;
+        }
 
     } catch (error) {
-        console.error('Erro:', error);
+        console.error('Erro detalhado:', {
+            message: error.message,
+            code: error.code,
+            command: error.command,
+            stack: error.stack
+        });
 
-        // Garante que sempre enviamos um JSON válido
         return res.status(500).json({
             success: false,
-            message: 'Erro ao processar sua solicitação. Tente novamente mais tarde.'
+            message: `Erro ao enviar email: ${error.message}`,
+            error: process.env.NODE_ENV === 'development' ? error.toString() : undefined
         });
     }
 }
