@@ -1,0 +1,485 @@
+@media (max-width: 768px) {
+    .mobile-menu {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+
+    .main-nav ul {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--secondary-color);
+        flex-direction: column;
+        padding: 2rem 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        overflow-y: auto;
+        z-index: 1000;
+    }
+
+    .main-nav ul.active {
+        display: flex;
+    }
+
+    .main-nav a {
+        font-size: 1.2rem;
+        padding: 0.5rem 2rem;
+        display: inline-block;
+        width: 100%;
+        color: var(--dark-text);
+    }
+
+    .mobile-menu span {
+        background: var(--dark-text);
+    }
+
+    .main-nav li {
+        width: 100%;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .main-nav li:not(:last-child) {
+        border-bottom: 1px solid rgba(29, 6, 74, 0.1);
+    }
+
+    .logo-container {
+        min-width: auto;
+        padding: 0.5rem 0;
+    }
+
+    .logo img {
+        height: 45px;
+    }
+
+    .company-name {
+        font-size: 0.75rem;
+    }
+
+    .header .container {
+        height: 80px;
+        padding: 0 1rem;
+    }
+
+    .quem-somos-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+    }
+
+    .stats-container {
+        flex-direction: column;
+        gap: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .text-content {
+        padding: 2rem;
+        gap: 1.5rem;
+    }
+
+    .text-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .highlight-text {
+        font-size: 1.1rem;
+    }
+
+    .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .image-frame {
+        aspect-ratio: 16/9;
+    }
+
+    .image-content {
+        gap: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+    }
+
+    .highlight-text {
+        font-size: 1.1rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+        margin: 2rem auto;
+    }
+
+    .service-card {
+        min-height: 300px;
+        padding: 1.5rem;
+        margin-bottom: 0.5rem;
+        transform: none !important;
+    }
+
+    .service-card i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .service-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .service-card p {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .service-link {
+        padding: 0.7rem 1.2rem;
+    }
+
+    .service-features {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .service-features span {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+    }
+
+    .service-card.active {
+        min-height: 400px;
+        transform: translateY(-5px);
+    }
+
+    .service-header {
+        padding: 1rem;
+    }
+
+    .service-content {
+        padding: 1.5rem;
+    }
+
+    .service-card.active .service-content {
+        padding: 0.5rem 1.5rem 1.5rem;
+    }
+
+    .service-preview {
+        font-size: 1rem;
+        padding: 0.5rem 0;
+    }
+
+    .btn-contact {
+        padding: 0.8rem 1.5rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .services-banner {
+        aspect-ratio: 1300/300;
+        width: 100%;
+        height: auto;
+        margin: 1rem 0;
+    }
+
+    .steps-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .steps-headline {
+        padding-right: 0;
+    }
+
+    .steps-headline h2 {
+        font-size: 2rem;
+    }
+
+    .step-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .carousel-caption h3 {
+        font-size: 1.2rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+
+    .carousel {
+        aspect-ratio: 4/3;
+        min-height: 300px;
+    }
+
+    .carousel-caption {
+        padding: 1rem;
+    }
+
+    .dimensions-inputs {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .dimension-field input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .dimensions-help {
+        font-size: 0.8rem;
+        margin-top: 0.6rem;
+    }
+
+    .quote-form {
+        padding: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        margin-top: 0.8rem;
+    }
+
+    .hero {
+        background-attachment: scroll;
+        margin-top: 80px;
+        height: auto;
+        background-attachment: scroll; /* Better performance on mobile */
+        animation: none; /* Disable zoom animation on mobile */
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain; /* Change to contain for mobile */
+        width: 100vw;
+        max-width: 100%;
+    }
+
+    .hero-image {
+        aspect-ratio: 16/9;
+        width: 100%;
+        height: auto;
+        max-width: none;
+    }
+
+    .container {
+        padding: 0 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .section {
+        padding: 3rem 0;
+        width: 100%;
+    }
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .hero {
+        margin-top: 80px;
+        width: 100%;
+        max-width: 100vw;
+        overflow: hidden;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0 15px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .section {
+        width: 100%;
+        padding: 2rem 0;
+        overflow: hidden;
+    }
+
+    .contact-card {
+        padding: 1.5rem;
+    }
+
+    .contact-card i {
+        font-size: 2rem;
+    }
+
+    .contact-card h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Correções para o card de email */
+    .contact-card a {
+        font-size: 0.9rem;
+        word-break: break-word; /* Permite quebra de palavras longas */
+        display: block;
+        padding: 0.3rem 0;
+    }
+
+    .contact-info {
+        grid-template-columns: 1fr; /* Muda para uma única coluna em mobile */
+        gap: 1.5rem;
+    }
+
+    .contact-card {
+        padding: 1.5rem;
+        min-height: auto; /* Remove altura mínima fixa */
+    }
+}
+
+/* Adicionar media query para dispositivos muito pequenos */
+@media (max-width: 360px) {
+    .hero {
+        margin-top: 80px;
+    }
+
+    .hero-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .section {
+        padding: 1.5rem 0;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header .container {
+        height: 90px;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .company-name {
+        font-size: 0.8rem;
+    }
+
+    .main-nav ul {
+        gap: 1.5rem;
+    }
+
+    .quem-somos-content {
+        gap: 2.5rem;
+    }
+
+    .text-content {
+        padding: 2rem;
+    }
+
+    .stats-container {
+        gap: 1.5rem;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        min-height: 320px;
+    }
+
+    .service-card.active {
+        min-height: 420px;
+    }
+
+    .services-banner {
+        aspect-ratio: 1300/300;
+        width: 100%;
+        height: auto;
+    }
+
+    .carousel {
+        aspect-ratio: 3/2;
+        min-height: 350px;
+    }
+
+    .hero {
+        height: 70vh;
+        margin-top: 90px;
+    }
+
+    /* Ajustes para tablets */
+    .contact-info {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas em tablets */
+        gap: 1.5rem;
+    }
+
+    .contact-card a {
+        font-size: 1rem;
+        word-break: break-word;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1366px) {
+    /* Remover esta regra que forçava 3 colunas */
+    /*.services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }*/
+}
+
+@media (min-width: 1025px) {
+    .services-banner {
+        height: 100vh;
+        min-height: 600px;
+        max-height: 800px;
+    }
+}
