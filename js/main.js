@@ -77,6 +77,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    quoteForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        try {
+            const formData = new FormData(quoteForm);
+            const data = Object.fromEntries(formData);
+
+            console.log('Enviando dados:', data);
+
+            const response = await fetch('/api/submit-form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            // Log da resposta bruta
+            const responseText = await response.text();
+            console.log('Resposta bruta:', responseText);
+
+            // Tenta converter para JSON
+            let result;
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Erro ao parsear JSON:', parseError);
+                throw new Error('Resposta inválida do servidor');
+            }
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Erro ao enviar formulário');
+            }
+
+            alert(result.message);
+            quoteForm.reset();
+        } catch (error) {
+            console.error('Erro completo:', error);
+            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
+        }
+    });
+
     loadGallery();
     // Google Maps script will call initMap
     initServicesAccordion();
