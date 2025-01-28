@@ -1,9 +1,14 @@
-
 {
   "name": "enitransportes",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "nodemailer": "^6.9.7"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "start": "vercel start"
   }
 }
