@@ -1,16 +1,16 @@
 import nodemailer from 'nodemailer';
 
 export default async function handler(req, res) {
-    // Primeiro, teste simples para verificar se a API está funcionando
     try {
-        // Log básico
-        console.log('Method:', req.method);
-        console.log('Body:', req.body);
+        console.log('Requisição recebida:', {
+            method: req.method,
+            body: req.body
+        });
 
-        // Retorna uma resposta simples
+        // Simples teste de resposta
         return res.status(200).json({
             success: true,
-            message: 'API funcionando!',
+            message: 'Formulário recebido com sucesso!',
             data: req.body
         });
 
