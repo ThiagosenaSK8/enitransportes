@@ -24,20 +24,36 @@
   ],
   "routes": [
     {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.enitransportes.com.br"
+        }
+      ],
+      "status": 301,
+      "headers": {
+        "Location": "https://enitransportes.com.br/$1"
+      }
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
     },
     {
       "src": "/quemsomos",
       "dest": "/quemsomos.html"
     },
     {
-      "src": "/(.*)\\.html",
-      "dest": "/$1.html"
-    },
-    {
-      "src": "^(?!/api).*$",
-      "dest": "/index.html"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
