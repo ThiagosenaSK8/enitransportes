@@ -28,19 +28,16 @@
       "dest": "/api/$1"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
       "src": "/quemsomos",
       "dest": "/quemsomos.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "src": "/(.*)\\.html",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "^(?!/api).*$",
+      "dest": "/index.html"
     }
   ]
 }
