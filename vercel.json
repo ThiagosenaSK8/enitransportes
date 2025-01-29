@@ -24,19 +24,6 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.enitransportes.com.br"
-        }
-      ],
-      "status": 301,
-      "headers": {
-        "Location": "https://enitransportes.com.br/$1"
-      }
-    },
-    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
@@ -54,6 +41,13 @@
     {
       "src": "/(.*)",
       "dest": "/$1"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "www.enitransportes.com.br",
+      "destination": "enitransportes.com.br",
+      "permanent": true
     }
   ]
 }
