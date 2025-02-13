@@ -3,16 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "dependencies": {
-    "nodemailer": "^6.9.7"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "scripts": {
     "dev": "vercel dev",
-    "deploy": "vercel deploy --prod",
-    "build": "echo 'No build step required'",
-    "start": "vercel start"
+    "deploy": "vercel deploy --prod"
   }
 }

@@ -45,78 +45,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(quoteForm);
             const data = Object.fromEntries(formData);
 
-            // Log para debug
-            console.log('Dados do formulário:', data);
-
-            const response = await fetch('/api/submit-form', {
+            // Send to webhook URL
+            const response = await fetch('https://hook.us1.make.com/fnbcf99374eupzk4fz6kc1ohwfzxdp2y', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
 
-            console.log('Status da resposta:', response.status);
-            const result = await response.json();
-            console.log('Resposta completa:', result);
-
             if (!response.ok) {
-                throw new Error(result.message || 'Erro ao enviar formulário');
+                throw new Error('Erro ao enviar formulário');
             }
 
-            alert(result.message);
+            alert('Formulário enviado com sucesso! Entraremos em contato em breve.');
             quoteForm.reset();
         } catch (error) {
-            console.error('Erro completo:', error);
-            alert(error.message || 'Erro ao enviar o formulário. Por favor, tente novamente.');
+            console.error('Erro:', error);
+            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
         } finally {
             buttonText.style.display = 'inline-block';
             spinner.style.display = 'none';
             submitBtn.disabled = false;
-        }
-    });
-
-    quoteForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        try {
-            const formData = new FormData(quoteForm);
-            const data = Object.fromEntries(formData);
-
-            console.log('Enviando dados:', data);
-
-            const response = await fetch('/api/submit-form', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            // Log da resposta bruta
-            const responseText = await response.text();
-            console.log('Resposta bruta:', responseText);
-
-            // Tenta converter para JSON
-            let result;
-            try {
-                result = JSON.parse(responseText);
-            } catch (parseError) {
-                console.error('Erro ao parsear JSON:', parseError);
-                throw new Error('Resposta inválida do servidor');
-            }
-
-            if (!response.ok) {
-                throw new Error(result.message || 'Erro ao enviar formulário');
-            }
-
-            alert(result.message);
-            quoteForm.reset();
-        } catch (error) {
-            console.error('Erro completo:', error);
-            alert('Erro ao enviar o formulário. Por favor, tente novamente.');
         }
     });
 
@@ -410,3 +360,55 @@ function initCarousel() {
         resetInterval();
     }
 }
+
+// Google Maps Implementation
+function initMap() {
+    const mapElement = document.getElementById('map');
+    if (!mapElement) {
+        console.error('Map container not found');
+        return;
+    }
+
+    try {
+        const eniLocation = { lat: -16.418542876278202, lng: -39.0977925880008 }; // Updated coordinates
+        const mapOptions = {
+            zoom: 18,
+            center: eniLocation,
+            mapId: '1e4bfc5af9b55088'
+        };
+
+        const map = new google.maps.Map(mapElement, mapOptions);
+
+        const marker = new google.maps.Marker({
+            position: eniLocation,
+            map: map,
+            title: 'Eni Transportes',
+            animation: google.maps.Animation.DROP
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: `
+                <div class="map-info">
+                    <h3>Eni Transportes</h3>
+                    <p>Av. Jorge Amado, Nº 800</p>
+                    <p>Bairro Cambolo</p>
+                    <p>Porto Seguro - BA</p>
+                    <p>CEP: 45810-000</p>
+                </div>
+            `
+        });
+
+        marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+        });
+
+        // Open info window by default
+        infoWindow.open(map, marker);
+
+    } catch (error) {
+        console.error('Error initializing map:', error);
+    }
+}
+
+// Make sure initMap is available globally
+window.initMap = initMap;
